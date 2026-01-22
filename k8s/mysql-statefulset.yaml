@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: mysql
   serviceName: "mysql"
-  replicas: 3 # by default is 1
+  replicas: 2 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
