@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: api-deploy
+  labels:
+    app: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api 
+  template:
+    metadata:
+      labels:
+        app: api 
+    spec:
+      containers:
+        - name: api
+          image: moshe5434/weapon:v1
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_USER
+              value: root
+            - name: DATABASE_NAME
+              value: weapon_db
+            - name: DATABASE_PORT
+              value: '3306'
+            - name: DATABASE_HOST
+              value: localhost
+            - name: DATABASE_PASSWORD 
+              value: ''
+            - name: TABLE_NAME
+              value: weapon_table
+
+    

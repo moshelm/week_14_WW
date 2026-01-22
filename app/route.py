@@ -1,17 +1,23 @@
 from fastapi import APIRouter,UploadFile,File
 import pandas as pd
 from io import BytesIO
-
+from .models import DataF
+from .db import insert_db,init_table,init_database
 
 router = APIRouter()
 
+init_database()
+init_table()
+
 @router.post('/upload')
 def get_csv(file:UploadFile=File(...)):
+    
     df = read_csv(file)
     clean_none(df)
     create_risk_level_column(df)
-    data = df.to_dict(orient='records')
-    return {'masseg':data}
+    data = DataF(records=df.to_dict(orient='records'))
+    insert_db(data)
+    return {"status": "success",'number records':len(data.records)}
 
 
 def read_csv(file:UploadFile)-> pd.DataFrame:

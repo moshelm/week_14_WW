@@ -23,4 +23,6 @@ class SetData(BaseModel):
     origin_country : str 
     storage_location : str 
     year_estimated : int
-    risk_level : StopIteration
+    risk_level : str
+class DataF(BaseModel):
+    records : list[SetData]
