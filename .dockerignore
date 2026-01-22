@@ -1,0 +1,7 @@
+.screenshots/
+.screenshots
+venv
+.k8s/
+.data/
+.k8s
+.data
