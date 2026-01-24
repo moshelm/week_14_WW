@@ -6,8 +6,8 @@ from .db import insert_db,init_table,init_database
 
 router = APIRouter()
 
-init_database()
-init_table()
+# init_database()
+# init_table()
 
 @router.post('/upload')
 def get_csv(file:UploadFile=File(...)):
