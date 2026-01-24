@@ -21,15 +21,15 @@ spec:
             - containerPort: 8000
           env:
             - name: DATABASE_USER
-              value: root
+              value: "root"
             - name: DATABASE_NAME
-              value: weapon_db
+              value: "weapon_db"
             - name: DATABASE_PORT
-              value: '3306'
+              value: "3306"
             - name: DATABASE_HOST
-              value: localhost
-            - name: DATABASE_PASSWORD 
-              value: ''
+              value: "mysql-service"
+            - name: DATABASE_PASSWORD
+              value: "my-pw"
             - name: TABLE_NAME
               value: weapon_table
 
