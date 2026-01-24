@@ -1,4 +1,4 @@
-from fastapi import APIRouter,UploadFile,File
+from fastapi import APIRouter,UploadFile,File,HTTPException
 import pandas as pd
 from io import BytesIO
 from .models import DataF
@@ -11,13 +11,25 @@ router = APIRouter()
 
 @router.post('/upload')
 def get_csv(file:UploadFile=File(...)):
-    
-    df = read_csv(file)
+    try:
+        df = read_csv(file)
+    except Exception as e:
+        raise HTTPException(status_code=400,detail=f'Error reading CSV: {str(e)}')
     clean_none(df)
     create_risk_level_column(df)
-    data = DataF(records=df.to_dict(orient='records'))
-    insert_db(data)
-    return {"status": "success",'number records':len(data.records)}
+    try:
+        data = DataF(records=df.to_dict(orient='records'))
+    except Exception as e:
+        raise HTTPException(status_code=422,detail=f"Data validation failed: {str(e)}")
+    res = insert_db(data)
+    if res:
+        return {
+            "status": "success",
+            "message": "Records uploaded successfully",
+            "records_count": len(data.records)
+        }
+    else:
+        raise HTTPException(status_code=500, detail=f"Database error: {res}")
 
 
 def read_csv(file:UploadFile)-> pd.DataFrame:
