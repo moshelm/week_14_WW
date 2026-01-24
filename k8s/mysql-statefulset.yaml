@@ -5,18 +5,18 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: mysql
-  serviceName: "mysql"
-  replicas: 2 # by default is 1
+      app: mysql-pod 
+  serviceName: "mysql-service"
+  replicas: 1 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
       labels:
-        app: mysql # has to match .spec.selector.matchLabels
+        app: mysql-pod # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - name: mysql
+      - name: mysql-con
         image: mysql:8.0
         ports:
         - containerPort: 3306
