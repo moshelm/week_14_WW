@@ -15,7 +15,7 @@ spec:
         app: api 
     spec:
       containers:
-        - name: api
+        - name: api-con
           image: moshe5434/weapon:v1
           ports:
             - containerPort: 8000
